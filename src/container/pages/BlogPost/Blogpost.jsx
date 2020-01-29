@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import './BlogPost.css';
-import Post from '../../component/Post/Post';
+import Post from '../../../component/Post/Post';
 import axios from 'axios';
+import API from '../../../services';
 
 class Blogpost extends Component {
     state = {
@@ -17,6 +18,12 @@ class Blogpost extends Component {
     }
 
     getPostAPI = () => {
+        API getNewsBlog().then(result => {
+            this.setState({
+                post: result
+            })
+
+        })
         axios.get('http://localhost:3004/posts?_sort=id&_order=desc')
         .then((result)=>{
             // console.log(result.data);
@@ -113,6 +120,12 @@ class Blogpost extends Component {
         
     }
 
+    handleDetail = (id) => {
+        this.props.history.push(`/detail-post/${id}`);
+
+
+    }
+
     componentDidMount(){
         this.getPostAPI();
     }
@@ -121,6 +134,8 @@ class Blogpost extends Component {
         return (
 
             <Fragment>
+                <p>Halaman Blog Post</p>
+                <hr/>
                 <p className="section-title">Blog Post</p>
                 <div className="form-add-post">
                     <label htmlFor="title">Title</label>
@@ -131,7 +146,7 @@ class Blogpost extends Component {
                 </div>
                 {
                     this.state.post.map(post => {
-                        return <Post key={post.id} data={post} remove={this.handleRemove} update={this.handleUpdate}/>
+                        return <Post key={post.id} data={post} remove={this.handleRemove} update={this.handleUpdate} goDetail={this.handleDetail} />
                     })
                 }
                 
