@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, {Component, useState, useEffect} from 'react';
 import './Hooks.css';
 
 
@@ -12,6 +12,21 @@ import './Hooks.css';
 //             count: this.state.count + 1
 //         })
 //     }
+
+//     componentDidMount(){ 
+//         document.title = `Title Change: ${this.state.count}`; 
+
+//     }
+
+//     componentDidUpdate(){
+//         document.title = `Title Change: ${this.state.count}`;
+//     }
+
+//     componentWillUnmount(){
+//         document.title = "ReactJS Hello World";
+        
+//     }
+
 //     render(){
 //         return(
 //             <div className="p-hooks">
@@ -23,11 +38,21 @@ import './Hooks.css';
 // }
 
 const Hooks = () => {
-    const [count, setCount] = useState(0);
+    const [count, setCount] = useState(0); //setCount nama fungsi bebas dibuat sendiri
+
+    useEffect(()=>{
+        document.title = `Title Change: ${count}`; 
+        return(()=>{
+            document.title = "ReactJS Hello World";
+        })
+
+
+    })
+
     return (
         <div className="p-hooks">
-            <p>Nilai saya saat ini adalah: 0</p>
-            <button>Update Nilai</button>
+            <p>Nilai saya saat ini adalah: {count}</p>
+            <button onClick={()=> setCount(count + 1)}>Update Nilai</button>
         </div>
     )
 }
